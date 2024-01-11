@@ -9,13 +9,13 @@ import 'package:flutter_instagram_storyboard/src/first_build_mixin.dart';
 class StoryPageContainerView extends StatefulWidget {
   final StoryButtonData buttonData;
   final VoidCallback onStoryComplete;
-  final PageController? pageController;
-  final VoidCallback? onClosePressed;
+  final PageController pageController;
+  final VoidCallback onClosePressed;
 
   const StoryPageContainerView({
-    Key? key,
-    required this.buttonData,
-    required this.onStoryComplete,
+    Key key,
+    @required this.buttonData,
+    @required this.onStoryComplete,
     this.pageController,
     this.onClosePressed,
   }) : super(key: key);
@@ -26,7 +26,7 @@ class StoryPageContainerView extends StatefulWidget {
 
 class _StoryPageContainerViewState extends State<StoryPageContainerView>
     with FirstBuildMixin {
-  late StoryTimelineController _storyController;
+  StoryTimelineController _storyController;
   final Stopwatch _stopwatch = Stopwatch();
   Offset _pointerDownPosition = Offset.zero;
   int _pointerDownMillis = 0;
@@ -68,7 +68,7 @@ class _StoryPageContainerViewState extends State<StoryPageContainerView>
   Widget _buildCloseButton() {
     Widget closeButton;
     if (widget.buttonData.closeButton != null) {
-      closeButton = widget.buttonData.closeButton!;
+      closeButton = widget.buttonData.closeButton;
     } else {
       closeButton = SizedBox(
         height: 40.0,
@@ -77,7 +77,7 @@ class _StoryPageContainerViewState extends State<StoryPageContainerView>
           padding: EdgeInsets.zero,
           onPressed: () {
             if (widget.onClosePressed != null) {
-              widget.onClosePressed!.call();
+              widget.onClosePressed.call();
             } else {
               Navigator.of(context).pop();
             }
@@ -148,7 +148,7 @@ class _StoryPageContainerViewState extends State<StoryPageContainerView>
     if (!mounted) {
       return false;
     }
-    final storyWidth = context.size!.width;
+    final storyWidth = context.size.width;
     return position.dx <= (storyWidth * .499);
   }
 
@@ -223,7 +223,7 @@ enum StoryTimelineEvent {
 typedef StoryTimelineCallback = Function(StoryTimelineEvent);
 
 class StoryTimelineController {
-  _StoryTimelineState? _state;
+  _StoryTimelineState _state;
 
   final HashSet<StoryTimelineCallback> _listeners =
       HashSet<StoryTimelineCallback>();
@@ -280,9 +280,9 @@ class StoryTimeline extends StatefulWidget {
   final StoryButtonData buttonData;
 
   const StoryTimeline({
-    Key? key,
-    required this.controller,
-    required this.buttonData,
+    Key key,
+    @required this.controller,
+    @required this.buttonData,
   }) : super(key: key);
 
   @override
@@ -290,7 +290,7 @@ class StoryTimeline extends StatefulWidget {
 }
 
 class _StoryTimelineState extends State<StoryTimeline> {
-  late Timer _timer;
+  Timer _timer;
   int _accumulatedTime = 0;
   int _maxAccumulator = 0;
   bool _isPaused = false;
@@ -438,13 +438,13 @@ class _TimelinePainter extends CustomPainter {
   final double thikness;
 
   _TimelinePainter({
-    required this.fillColor,
-    required this.backgroundColor,
-    required this.curSegmentIndex,
-    required this.numSegments,
-    required this.percent,
-    required this.spacing,
-    required this.thikness,
+    @required this.fillColor,
+    @required this.backgroundColor,
+    @required this.curSegmentIndex,
+    @required this.numSegments,
+    @required this.percent,
+    @required this.spacing,
+    @required this.thikness,
   });
 
   @override

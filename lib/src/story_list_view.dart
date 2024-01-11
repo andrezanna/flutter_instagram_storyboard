@@ -11,16 +11,16 @@ class StoryListView extends StatefulWidget {
   final double paddingRight;
   final double paddingTop;
   final double paddingBottom;
-  final ScrollPhysics? physics;
-  final IStoryPageTransform? pageTransform;
+  final ScrollPhysics physics;
+  final IStoryPageTransform pageTransform;
   final bool safeAreaTop;
   final bool safeAreaBottom;
   final double listHeight;
   final double buttonWidth;
 
   const StoryListView({
-    Key? key,
-    required this.buttonDatas,
+    Key key,
+    @required this.buttonDatas,
     this.buttonSpacing = 10.0,
     this.paddingLeft = 10.0,
     this.listHeight = 120.0,
@@ -51,7 +51,7 @@ class _StoryListViewState extends State<StoryListView> {
       StoryRoute(
         storyContainerSettings: StoryContainerSettings(
           buttonData: buttonData,
-          tapPosition: buttonData.buttonCenterPosition!,
+          tapPosition: buttonData.buttonCenterPosition,
           curve: buttonData.pageAnimationCurve,
           allButtonDatas: widget.buttonDatas,
           pageTransform: widget.pageTransform,

@@ -10,9 +10,9 @@ class StoryPageContainerBuilder extends StatefulWidget {
   final StoryContainerSettings settings;
 
   const StoryPageContainerBuilder({
-    Key? key,
-    required this.settings,
-    required this.animation,
+    Key key,
+    @required this.settings,
+    @required this.animation,
   }) : super(key: key);
 
   @override
@@ -22,8 +22,8 @@ class StoryPageContainerBuilder extends StatefulWidget {
 
 class _StoryPageContainerBuilderState extends State<StoryPageContainerBuilder>
     with SetStateAfterFrame, FirstBuildMixin {
-  late PageController _pageController;
-  late IStoryPageTransform _storyPageTransform;
+  PageController _pageController;
+  IStoryPageTransform _storyPageTransform;
   static const double kMaxPageOverscroll = .2;
   int _currentPage = 0;
   double _pageDelta = 0.0;
@@ -44,8 +44,8 @@ class _StoryPageContainerBuilderState extends State<StoryPageContainerBuilder>
     );
     _pageController.addListener(() {
       setState(() {
-        _currentPage = _pageController.page!.floor();
-        _pageDelta = _pageController.page! - _currentPage;
+        _currentPage = _pageController.page.floor();
+        _pageDelta = _pageController.page - _currentPage;
         final isFirst = _currentPage == 0;
         final isLast =
             _currentPage == widget.settings.allButtonDatas.length - 1;
@@ -130,7 +130,7 @@ class _StoryPageContainerBuilderState extends State<StoryPageContainerBuilder>
 
   void _afterFirstBuild() {
     if (mounted) {
-      _pageWidth = context.size!.width;
+      _pageWidth = context.size.width;
       _totalWidth = _pageWidth * (widget.settings.allButtonDatas.length - 1);
     }
   }
@@ -256,14 +256,14 @@ class _StoryPageContainerBuilderState extends State<StoryPageContainerBuilder>
 class _PageClipper extends CustomClipper<RRect> {
   final double startX;
   final double startY;
-  final Radius? borderRadius;
+  final Radius borderRadius;
   final double animationValue;
 
   _PageClipper({
-    required this.startX,
-    required this.startY,
-    required this.animationValue,
-    required this.borderRadius,
+    @required this.startX,
+    @required this.startY,
+    @required this.animationValue,
+    @required this.borderRadius,
   });
 
   @override
@@ -277,7 +277,7 @@ class _PageClipper extends CustomClipper<RRect> {
       bottomSide,
       size.width - rightSide,
       size.height - topSide,
-      borderRadius == null ? Radius.zero : (borderRadius! * animationValue),
+      borderRadius == null ? Radius.zero : (borderRadius * animationValue),
     );
   }
 

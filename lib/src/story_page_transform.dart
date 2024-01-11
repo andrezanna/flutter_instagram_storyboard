@@ -18,7 +18,7 @@ abstract class IStoryPageTransform {
     double delta,
   );
 
-  ScrollPhysics? get pageScrollPhysics;
+  ScrollPhysics get pageScrollPhysics;
 }
 
 /// If you don't need any transformation between stories
@@ -37,7 +37,7 @@ class StoryPageNoTransform implements IStoryPageTransform {
   }
 
   @override
-  ScrollPhysics? get pageScrollPhysics => null;
+  ScrollPhysics get pageScrollPhysics => null;
 }
 
 class StoryPage3DTransform implements IStoryPageTransform {
@@ -50,7 +50,7 @@ class StoryPage3DTransform implements IStoryPageTransform {
   }) : radAngle = pi / 180.0 * degAngle;
 
   @override
-  ScrollPhysics? get pageScrollPhysics => const BouncingScrollPhysics();
+  ScrollPhysics get pageScrollPhysics => const BouncingScrollPhysics();
 
   @override
   Widget transform(

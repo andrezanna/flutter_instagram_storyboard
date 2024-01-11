@@ -6,15 +6,15 @@ import 'package:flutter/material.dart';
 /// but if you're ok with this, feel free to use it as a base for
 /// your story pages
 class StoryPageScaffold extends StatelessWidget {
-  final PreferredSizeWidget? appBar;
+  final PreferredSizeWidget appBar;
   final Widget body;
-  final Widget? bottomNavigationBar;
-  final BorderRadius? borderRadius;
+  final Widget bottomNavigationBar;
+  final BorderRadius borderRadius;
 
   const StoryPageScaffold({
-    Key? key,
+    Key key,
     this.appBar,
-    required this.body,
+    @required this.body,
     this.bottomNavigationBar,
     this.borderRadius,
   }) : super(key: key);
@@ -65,11 +65,11 @@ class GradientTransition extends StatelessWidget {
   final GradientTransitionDirection gradientTransitionDirection;
 
   const GradientTransition({
-    Key? key,
-    required this.width,
-    required this.height,
+    Key key,
+    @required this.width,
+    @required this.height,
     this.bottomPositioned = false,
-    required this.baseColor,
+    @required this.baseColor,
     this.isReversed = false,
     this.gradientTransitionDirection = GradientTransitionDirection.vertical,
   }) : super(key: key);

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 mixin SetStateAfterFrame<T extends StatefulWidget> on State<T> {
-  void safeSetState(VoidCallback? closure) {
+  void safeSetState(VoidCallback closure) {
     try {
       if (mounted) {
         setState(() {
@@ -18,7 +18,7 @@ mixin SetStateAfterFrame<T extends StatefulWidget> on State<T> {
     return WidgetsBinding.instance;
   }
 
-  void setStateAfterFrame(VoidCallback? closure) {
+  void setStateAfterFrame(VoidCallback closure) {
     _widgetsBinding?.ensureVisualUpdate();
     _widgetsBinding?.addPostFrameCallback(
       (timeStamp) {
