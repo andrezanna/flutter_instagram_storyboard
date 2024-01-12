@@ -87,7 +87,8 @@ class _StoryPageScaffoldState extends State<StoryPageScaffold> {
               Expanded(
                 child: Text(widget.text,style: widget.textStyle,),
               ),
-              InkWell(
+              GestureDetector(
+                behavior: HitTestBehavior.opaque,
                 onTap: () {
                   setState(() {
                     userLike = !userLike;
@@ -111,7 +112,8 @@ class _StoryPageScaffoldState extends State<StoryPageScaffold> {
               SizedBox(
                 width: 30,
               ),
-              InkWell(
+              GestureDetector(
+                behavior: HitTestBehavior.opaque,
                 onTap: () {
                   widget.onWatchPress();
                 },
