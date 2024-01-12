@@ -9,6 +9,7 @@ import 'package:flutter_instagram_storyboard/src/first_build_mixin.dart';
 class StoryPageContainerView extends StatefulWidget {
   final StoryButtonData buttonData;
   final VoidCallback onStoryComplete;
+  final VoidCallback onSegmentComplete;
   final PageController pageController;
   final VoidCallback onClosePressed;
 
@@ -16,6 +17,7 @@ class StoryPageContainerView extends StatefulWidget {
     Key key,
     @required this.buttonData,
     @required this.onStoryComplete,
+    @required this.onSegmentComplete,
     this.pageController,
     this.onClosePressed,
   }) : super(key: key);
@@ -58,9 +60,12 @@ class _StoryPageContainerViewState extends State<StoryPageContainerView>
     return _pageValue % 1.0 == 0.0;
   }
 
-  void _onTimelineEvent(StoryTimelineEvent event) {
-    if (event == StoryTimelineEvent.storyComplete) {
+  void _onTimelineEvent(SegmentEvent event) {
+    if (event.event == StoryTimelineEvent.storyComplete) {
       widget.onStoryComplete.call();
+    }
+    if(event.event == StoryTimelineEvent.segmentComplete){
+      widget.onSegmentComplete.call();
     }
     setState(() {});
   }
@@ -220,7 +225,14 @@ enum StoryTimelineEvent {
   segmentComplete,
 }
 
-typedef StoryTimelineCallback = Function(StoryTimelineEvent);
+class SegmentEvent{
+  StoryTimelineEvent event;
+  int segmentIndex;
+
+  SegmentEvent(this.event,this.segmentIndex);
+}
+
+typedef StoryTimelineCallback = Function(SegmentEvent);
 
 class StoryTimelineController {
   _StoryTimelineState _state;
@@ -236,15 +248,15 @@ class StoryTimelineController {
     _listeners.remove(callback);
   }
 
-  void _onStoryComplete() {
-    _notifyListeners(StoryTimelineEvent.storyComplete);
+  void _onStoryComplete(int segment) {
+    _notifyListeners(SegmentEvent(StoryTimelineEvent.storyComplete,segment));
   }
 
-  void _onSegmentComplete() {
-    _notifyListeners(StoryTimelineEvent.segmentComplete);
+  void _onSegmentComplete(int segment) {
+    _notifyListeners(SegmentEvent(StoryTimelineEvent.segmentComplete,segment));
   }
 
-  void _notifyListeners(StoryTimelineEvent event) {
+  void _notifyListeners(SegmentEvent event) {
     for (var e in _listeners) {
       e.call(event);
     }
@@ -328,8 +340,8 @@ class _StoryTimelineState extends State<StoryTimeline> {
           _onStoryComplete();
         } else {
           _accumulatedTime = 0;
-          _curSegmentIndex++;
           _onSegmentComplete();
+          _curSegmentIndex++;
         }
       }
       setState(() {});
@@ -341,7 +353,7 @@ class _StoryTimelineState extends State<StoryTimeline> {
         StoryWatchedContract.onStoryEnd) {
       widget.buttonData.markAsWatched();
     }
-    widget.controller._onStoryComplete();
+    widget.controller._onStoryComplete(0);
   }
 
   void _onSegmentComplete() {
@@ -349,7 +361,7 @@ class _StoryTimelineState extends State<StoryTimeline> {
         StoryWatchedContract.onSegmentEnd) {
       widget.buttonData.markAsWatched();
     }
-    widget.controller._onSegmentComplete();
+    widget.controller._onSegmentComplete(_curSegmentIndex);
   }
 
   bool get _isLastSegment {
@@ -376,7 +388,7 @@ class _StoryTimelineState extends State<StoryTimeline> {
   void nextSegment() {
     if (_isLastSegment) {
       _accumulatedTime = _maxAccumulator;
-      widget.controller._onStoryComplete();
+      widget.controller._onStoryComplete(0);
     } else {
       _accumulatedTime = 0;
       _curSegmentIndex++;

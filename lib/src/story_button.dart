@@ -222,6 +222,7 @@ class StoryButtonData {
   final double timelineSpacing;
   final EdgeInsets timlinePadding;
   final IsVisibleCallback isVisibleCallback;
+  final Function storyWatched;
 
   /// Usualy this is required for the final story
   /// to pop it out to its button mosition
@@ -251,6 +252,7 @@ class StoryButtonData {
   StoryButtonData({
     this.storyWatchedContract = StoryWatchedContract.onStoryEnd,
     this.storyController,
+    this.storyWatched,
     this.aspectRatio = 1.0,
     this.timelineThikness = 2.0,
     this.timelineSpacing = 8.0,
