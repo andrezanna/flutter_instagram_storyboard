@@ -166,12 +166,14 @@ class _StoryPageContainerViewState extends State<StoryPageContainerView>
         if (diffMillis <= maxPressMillis) {
           final position = event.position;
           final distance = (position - _pointerDownPosition).distance;
-          if (distance < 5.0) {
-            final isLeft = _isLeftPartOfStory(position);
-            if (isLeft) {
-              _storyController.previousSegment();
-            } else {
-              _storyController.nextSegment();
+          if(position.dy<MediaQuery.of(context).size.height-100) {
+            if (distance < 5.0) {
+              final isLeft = _isLeftPartOfStory(position);
+              if (isLeft) {
+                _storyController.previousSegment();
+              } else {
+                _storyController.nextSegment();
+              }
             }
           }
         }

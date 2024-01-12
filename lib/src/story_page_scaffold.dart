@@ -87,37 +87,31 @@ class _StoryPageScaffoldState extends State<StoryPageScaffold> {
               Expanded(
                 child: Text(widget.text,style: widget.textStyle,),
               ),
-              AbsorbPointer(
-                absorbing: true,
-                child: InkWell(
-                  onTap: () {
-                    setState(() {
-                      userLike = !userLike;
-                      likesCount = likesCount + (userLike ? 1 : -1);
-                    });
-                    widget.onStoryLike();
-                  },
-                  child: Row(children: [
-                    Icon(
-                      Icons.favorite,
-                      color: userLike
-                          ? Theme.of(context).primaryColor
-                          : Colors.white,
-                    ),
-                    Text(
-                      "${likesCount}",
-                      style: widget.textStyle,
-                    ),
-                  ]),
-                ),
+              InkWell(
+                onTap: () {
+                  setState(() {
+                    userLike = !userLike;
+                    likesCount = likesCount + (userLike ? 1 : -1);
+                  });
+                  widget.onStoryLike();
+                },
+                child: Row(children: [
+                  Icon(
+                    Icons.favorite,
+                    color: userLike
+                        ? Theme.of(context).primaryColor
+                        : Colors.white,
+                  ),
+                  Text(
+                    "${likesCount}",
+                    style: widget.textStyle,
+                  ),
+                ]),
               ),
               SizedBox(
                 width: 30,
               ),
-              AbsorbPointer(
-                absorbing: true,
-                child:InkWell(
-
+              InkWell(
                 onTap: () {
                   widget.onWatchPress();
                 },
@@ -131,7 +125,6 @@ class _StoryPageScaffoldState extends State<StoryPageScaffold> {
                     style: widget.textStyle,
                   ),
                 ]),
-              ),
               ),
             ],
           ),
