@@ -9,7 +9,6 @@ import 'package:flutter_instagram_storyboard/src/first_build_mixin.dart';
 class StoryPageContainerView extends StatefulWidget {
   final StoryButtonData buttonData;
   final VoidCallback onStoryComplete;
-  final VoidCallback onSegmentComplete;
   final PageController pageController;
   final VoidCallback onClosePressed;
 
@@ -17,7 +16,6 @@ class StoryPageContainerView extends StatefulWidget {
     Key key,
     @required this.buttonData,
     @required this.onStoryComplete,
-    @required this.onSegmentComplete,
     this.pageController,
     this.onClosePressed,
   }) : super(key: key);
@@ -63,9 +61,6 @@ class _StoryPageContainerViewState extends State<StoryPageContainerView>
   void _onTimelineEvent(SegmentEvent event) {
     if (event.event == StoryTimelineEvent.storyComplete) {
       widget.onStoryComplete.call();
-    }
-    if(event.event == StoryTimelineEvent.segmentComplete){
-      widget.onSegmentComplete.call();
     }
     setState(() {});
   }
