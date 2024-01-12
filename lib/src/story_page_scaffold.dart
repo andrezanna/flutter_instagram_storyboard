@@ -5,35 +5,63 @@ import 'package:flutter/material.dart';
 /// have to use this scaffold. You can use your own page structure
 /// but if you're ok with this, feel free to use it as a base for
 /// your story pages
-class StoryPageScaffold extends StatelessWidget {
+class StoryPageScaffold extends StatefulWidget {
   final PreferredSizeWidget appBar;
   final Widget body;
-  final Widget bottomNavigationBar;
+  final int likesCount;
+  final int watchCount;
+  final String text;
+  final bool userLike;
   final BorderRadius borderRadius;
+  final TextStyle textStyle;
+  final Function onStoryLike;
+  final Function onWatchPress;
 
   const StoryPageScaffold({
     Key key,
     this.appBar,
     @required this.body,
-    this.bottomNavigationBar,
     this.borderRadius,
+    this.likesCount,
+    this.watchCount,
+    this.text,
+    this.userLike,
+    this.onStoryLike,
+    this.onWatchPress,
+    this.textStyle,
   }) : super(key: key);
+
+  @override
+  State<StoryPageScaffold> createState() => _StoryPageScaffoldState();
+}
+
+class _StoryPageScaffoldState extends State<StoryPageScaffold> {
+  int likesCount;
+  int watchCount;
+  bool userLike;
+  @override
+  void initState() {
+    likesCount = widget.likesCount;
+    watchCount = widget.watchCount;
+    userLike = widget.userLike;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar,
+      appBar: widget.appBar,
       backgroundColor: Colors.transparent,
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: ClipRRect(
-          borderRadius: borderRadius ??
+          borderRadius: widget.borderRadius ??
               BorderRadius.circular(
                 12.0,
               ),
           child: Stack(
             children: [
-              body,
+              widget.body,
               IgnorePointer(
                 child: GradientTransition(
                   width: double.infinity,
@@ -46,7 +74,62 @@ class StoryPageScaffold extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: bottomNavigationBar,
+      bottomNavigationBar: SizedBox(
+        width: double.infinity,
+        height: kBottomNavigationBarHeight,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: 8.0,
+            horizontal: 20.0,
+          ),
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(widget.text,style: widget.textStyle,),
+              ),
+              InkWell(
+                onTap: () {
+                  setState(() {
+                    userLike = !userLike;
+                    likesCount = likesCount + (userLike ? 1 : -1);
+                  });
+                  widget.onStoryLike();
+                },
+                child: Row(children: [
+                  Icon(
+                    Icons.favorite,
+                    color: userLike
+                        ? Theme.of(context).primaryColor
+                        : Colors.white,
+                  ),
+                  Text(
+                    "${likesCount}",
+                    style: widget.textStyle,
+                  ),
+                ]),
+              ),
+              SizedBox(
+                width: 30,
+              ),
+              InkWell(
+                onTap: () {
+                  widget.onWatchPress();
+                },
+                child: Row(children: [
+                  Icon(
+                    Icons.remove_red_eye_outlined,
+                    color: Colors.white,
+                  ),
+                  Text(
+                    "${watchCount}",
+                    style: widget.textStyle,
+                  ),
+                ]),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
