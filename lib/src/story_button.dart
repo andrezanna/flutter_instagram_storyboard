@@ -121,7 +121,7 @@ class _StoryButtonState extends State<StoryButton>
                         splashFactory: widget.buttonData.inkFeatureFactory ??
                             InkRipple.splashFactory,
                         onTap: _onTap,
-      Stack(
+      child:Stack(
       children: [
         AspectRatio(
           aspectRatio: widget.buttonData.aspectRatio,
