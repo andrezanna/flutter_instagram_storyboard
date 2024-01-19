@@ -157,7 +157,7 @@ class _StoryButtonState extends State<StoryButton>
         ),
         _buildChild(),
       ],
-    ),
+    ),),
                         );
   }
 
