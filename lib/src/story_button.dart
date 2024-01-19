@@ -115,7 +115,13 @@ class _StoryButtonState extends State<StoryButton>
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
+    return Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        splashFactory: widget.buttonData.inkFeatureFactory ??
+                            InkRipple.splashFactory,
+                        onTap: _onTap,
+      Stack(
       children: [
         AspectRatio(
           aspectRatio: widget.buttonData.aspectRatio,
@@ -142,18 +148,7 @@ class _StoryButtonState extends State<StoryButton>
                       height: double.infinity,
                       decoration: widget.buttonData.buttonDecoration,
                     ),
-                    Material(
-                      color: Colors.transparent,
-                      child: InkWell(
-                        splashFactory: widget.buttonData.inkFeatureFactory ??
-                            InkRipple.splashFactory,
-                        onTap: _onTap,
-                        child: const SizedBox(
-                          width: double.infinity,
-                          height: double.infinity,
-                        ),
-                      ),
-                    ),
+                  
                   ],
                 ),
               ),
@@ -162,7 +157,8 @@ class _StoryButtonState extends State<StoryButton>
         ),
         _buildChild(),
       ],
-    );
+    ),
+                        );
   }
 
   @override
