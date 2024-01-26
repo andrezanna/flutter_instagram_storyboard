@@ -14,6 +14,7 @@ class StoryPageScaffold extends StatefulWidget {
   final bool userLike;
   final BorderRadius borderRadius;
   final TextStyle textStyle;
+  final TextStyle iconTextStyle;
   final Function onStoryLike;
   final Function onWatchPress;
   final Widget eyeIcon;
@@ -31,6 +32,7 @@ class StoryPageScaffold extends StatefulWidget {
     this.onStoryLike,
     this.onWatchPress,
     this.textStyle,
+    this.iconTextStyle,
     this.eyeIcon,
     this.favoriteIcon,
   }) : super(key: key);
@@ -114,7 +116,7 @@ class _StoryPageScaffoldState extends State<StoryPageScaffold> {
                   ),
                   Text(
                     "$likesCount",
-                    style: widget.textStyle,
+                    style: widget.iconTextStyle,
                   ),
                 ]),
               ),
@@ -129,7 +131,7 @@ class _StoryPageScaffoldState extends State<StoryPageScaffold> {
                   widget.eyeIcon,
                   Text(
                     "$watchCount",
-                    style: widget.textStyle,
+                    style: widget.iconTextStyle,
                   ),
                 ]),
               ),
