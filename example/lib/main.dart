@@ -1,6 +1,7 @@
 import 'package:example/story.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_instagram_storyboard/flutter_instagram_storyboard.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:story_view/story_view.dart';
 
 import 'user.dart';
@@ -35,108 +36,72 @@ class StoryExamplePage extends StatefulWidget {
 }
 
 class _StoryExamplePageState extends State<StoryExamplePage> {
-  List<Story> stories=[];
-  Map<User,List<StoryItem>> storyItems={};
+  List<Story> stories = [];
+  Map<User, List<StoryItem>> storyItems = {};
   static const double _borderRadius = 100.0;
-  final StoryTimelineController _controller =StoryTimelineController();
+  final StoryTimelineController _controller = StoryTimelineController();
 
   Widget _createDummyPage({
     @required StoryItem storyItem,
     bool addBottomBar = true,
   }) {
     return StoryPageScaffold(
-      bottomNavigationBar: addBottomBar
-          ? SizedBox(
-              width: double.infinity,
-              height: kBottomNavigationBarHeight,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 8.0,
-                  horizontal: 20.0,
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        width: double.infinity,
-                        height: double.infinity,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.white,
-                            width: 2.0,
-                          ),
-                          borderRadius: BorderRadius.circular(
-                            _borderRadius,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Icon(
-                        Icons.send,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            )
-          : const SizedBox.shrink(),
       body: Stack(
         children: [
           storyItem.view,
-                  Align(
-    alignment: Alignment.topCenter,
-    child: Container(
-    width: double.infinity,
-    height: 250,
-    decoration: BoxDecoration(
-    gradient: LinearGradient(
-    colors: [Colors.black38, Colors.transparent],
-    begin: Alignment.topCenter,
-    end: Alignment.bottomCenter),
-    ),
-    child: Padding(
-    padding: const EdgeInsets.only(top:64.0,right:8.0),
-    child: Align(
-    alignment: Alignment.topRight,
-    child: Container(
-    width: 48,
-    child: Column(
-    crossAxisAlignment: CrossAxisAlignment.center,
-    children: [
-    InkWell(
-    onTap: () {
-    
-    },
-    child: Column(children: [
-    Icon(
-    Icons.favorite,
-    color: Colors.white,),
-    Text(
-    "1",
-    ),
-    ]),
-    ),
-    SizedBox(
-    height: 30,
-    ),
-    InkWell(
-    onTap: () {
-    },
-    child: Column(children: [
-    Icon(
-    Icons.remove_red_eye_outlined,
-    ),
-    Text(
-    "1",
-    ),
-    ]),
-    ),
-    ],
-    ),
-    ),),),),),
+          Align(
+            alignment: Alignment.topCenter,
+            child: Container(
+              width: double.infinity,
+              height: 250,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    colors: [Colors.black38, Colors.transparent],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.only(top: 64.0, right: 8.0),
+                child: Align(
+                  alignment: Alignment.topRight,
+                  child: Container(
+                    width: 48,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        InkWell(
+                          onTap: () {},
+                          child: Column(children: [
+                            Icon(
+                              Icons.favorite,
+                              color: Colors.white,
+                            ),
+                            Text(
+                              "1",
+                            ),
+                          ]),
+                        ),
+                        SizedBox(
+                          height: 30,
+                        ),
+                        InkWell(
+                          onTap: () {},
+                          child: Column(children: [
+                            Icon(
+                              Icons.remove_red_eye_outlined,
+                            ),
+                            Text(
+                              "1",
+                            ),
+                          ]),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -213,117 +178,23 @@ class _StoryExamplePageState extends State<StoryExamplePage> {
                 child: _buildButtonChild('Want a new car?'),
                 borderDecoration: _buildBorderDecoration(Colors.red),
                 storyPages: [
-                  _createDummyPage(
-                    storyItem: StoryItem.pageImage(url: url, controller: controller),
-                    text:
-                        'Want to buy a new car? Get our loan for the rest of your life!',
-                    imageName: 'car',
-                  ),
-                  _createDummyPage(
-                    text:
-                        'Can\'t return the loan? Don\'t worry, we\'ll take your soul as a collateral ;-)',
-                    imageName: 'car',
-                  ),
+                  StoryPageScaffold(
+                    likesCount: 3,
+                    watchCount: 4,
+                    userLike: true,
+                    text: "testo del prova",
+                    textStyle: TextStyle(color: Colors.white),
+                    onStoryLike: () {},
+                    onWatchPress: () {},
+                    body: Image.asset(
+                      'assets/images/car.png',
+                      fit: BoxFit.cover,
+                    ),
+                    favoriteIcon: Icon(Icons.favorite_border),
+                    eyeIcon: Icon(Icons.remove_red_eye,color: Colors.white,),
+                  )
                 ],
                 segmentDuration: const Duration(seconds: 3),
-              ),
-              StoryButtonData(
-                storyController: _controller,
-                timelineBackgroundColor: Colors.blue,
-                buttonDecoration: _buildButtonDecoration('travel_1'),
-                borderDecoration: _buildBorderDecoration(
-                    const Color.fromARGB(255, 134, 119, 95)),
-                child: _buildButtonChild('Travel whereever'),
-                storyPages: [
-                  _createDummyPage(
-                    text: 'Get a loan',
-                    imageName: 'travel_1',
-                    addBottomBar: false,
-                  ),
-                  _createDummyPage(
-                    text: 'Select a place where you want to go',
-                    imageName: 'travel_2',
-                    addBottomBar: false,
-                  ),
-                  _createDummyPage(
-                    text: 'Dream about the place and pay our interest',
-                    imageName: 'travel_3',
-                    addBottomBar: false,
-                  ),
-                ],
-                segmentDuration: const Duration(seconds: 3),
-              ),
-              StoryButtonData(
-                timelineBackgroundColor: Colors.orange,
-                borderDecoration: _buildBorderDecoration(Colors.orange),
-                buttonDecoration: _buildButtonDecoration('house'),
-                child: _buildButtonChild('Buy a house anywhere'),
-                storyPages: [
-                  _createDummyPage(
-                    text: 'You cannot buy a house. Live with it',
-                    imageName: 'house',
-                  ),
-                ],
-                segmentDuration: const Duration(seconds: 5),
-              ),
-              StoryButtonData(
-                timelineBackgroundColor: Colors.red,
-                buttonDecoration: _buildButtonDecoration('car'),
-                child: _buildButtonChild('Want a new car?'),
-                borderDecoration: _buildBorderDecoration(Colors.red),
-                storyPages: [
-                  _createDummyPage(
-                    text:
-                        'Want to buy a new car? Get our loan for the rest of your life!',
-                    imageName: 'car',
-                  ),
-                  _createDummyPage(
-                    text:
-                        'Can\'t return the loan? Don\'t worry, we\'ll take your soul as a collateral ;-)',
-                    imageName: 'car',
-                  ),
-                ],
-                segmentDuration: const Duration(seconds: 3),
-              ),
-              StoryButtonData(
-                buttonDecoration: _buildButtonDecoration('travel_1'),
-                borderDecoration: _buildBorderDecoration(
-                    const Color.fromARGB(255, 134, 119, 95)),
-                child: _buildButtonChild('Travel whereever'),
-                storyPages: [
-                  _createDummyPage(
-                    text: 'Get a loan',
-                    imageName: 'travel_1',
-                    addBottomBar: false,
-                  ),
-                  _createDummyPage(
-                    text: 'Select a place where you want to go',
-                    imageName: 'travel_2',
-                    addBottomBar: false,
-                  ),
-                  _createDummyPage(
-                    text: 'Dream about the place and pay our interest',
-                    imageName: 'travel_3',
-                    addBottomBar: false,
-                  ),
-                ],
-                segmentDuration: const Duration(seconds: 3),
-              ),
-              StoryButtonData(
-                isVisibleCallback: () {
-                  return false;
-                },
-                timelineBackgroundColor: Colors.orange,
-                borderDecoration: _buildBorderDecoration(Colors.orange),
-                buttonDecoration: _buildButtonDecoration('house'),
-                child: _buildButtonChild('Buy a house anywhere'),
-                storyPages: [
-                  _createDummyPage(
-                    text: 'You cannot buy a house. Live with it',
-                    imageName: 'house',
-                  ),
-                ],
-                segmentDuration: const Duration(seconds: 5),
               ),
             ],
           ),
@@ -341,7 +212,7 @@ class _StoryExamplePageState extends State<StoryExamplePage> {
           views: event.views,
           hasUserLike: false,
           controller: controller,
-          shown: event.watched );
+          shown: event.watched);
     } else {
       story = StoryItem.pageImage(
           url: event.media.wide_thumb,
@@ -353,15 +224,5 @@ class _StoryExamplePageState extends State<StoryExamplePage> {
           shown: event.watched);
     }
     return story;
-  }
-
-  Future<void> listenForStories([int index = 0]) async {
-    List<Story> response = await getStories();
-    for (var event in response) {
-      stories.add(event);
-      storyItems[event.user].add(getStoryItem(event, StoryController(), index));
-    }
-    setState(() {});
-    return;
   }
 }

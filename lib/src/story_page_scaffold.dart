@@ -16,6 +16,8 @@ class StoryPageScaffold extends StatefulWidget {
   final TextStyle textStyle;
   final Function onStoryLike;
   final Function onWatchPress;
+  final Widget eyeIcon;
+  final Widget favoriteIcon;
 
   const StoryPageScaffold({
     Key key,
@@ -29,6 +31,8 @@ class StoryPageScaffold extends StatefulWidget {
     this.onStoryLike,
     this.onWatchPress,
     this.textStyle,
+    this.eyeIcon,
+    this.favoriteIcon,
   }) : super(key: key);
 
   @override
@@ -85,7 +89,11 @@ class _StoryPageScaffoldState extends State<StoryPageScaffold> {
           child: Row(
             children: [
               Expanded(
-                child: Text(widget.text,style: widget.textStyle,),
+                child: Text(
+                  widget.text,
+                  style: widget.textStyle,
+                  textScaleFactor: 1.0,
+                ),
               ),
               InkWell(
                 onTap: () {
@@ -96,14 +104,16 @@ class _StoryPageScaffoldState extends State<StoryPageScaffold> {
                   widget.onStoryLike();
                 },
                 child: Row(children: [
-                  Icon(
-                    Icons.favorite,
-                    color: userLike
-                        ? Theme.of(context).primaryColor
-                        : Colors.white,
+                  ColorFiltered(
+                    colorFilter: ColorFilter.mode(
+                        userLike
+                            ? Theme.of(context).primaryColor
+                            : Colors.white,
+                        BlendMode.srcIn),
+                    child: widget.favoriteIcon,
                   ),
                   Text(
-                    "${likesCount}",
+                    "$likesCount",
                     style: widget.textStyle,
                   ),
                 ]),
@@ -116,12 +126,9 @@ class _StoryPageScaffoldState extends State<StoryPageScaffold> {
                   widget.onWatchPress();
                 },
                 child: Row(children: [
-                  Icon(
-                    Icons.remove_red_eye_outlined,
-                    color: Colors.white,
-                  ),
+                  widget.eyeIcon,
                   Text(
-                    "${watchCount}",
+                    "$watchCount",
                     style: widget.textStyle,
                   ),
                 ]),
