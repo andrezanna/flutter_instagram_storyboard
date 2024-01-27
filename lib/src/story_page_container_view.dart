@@ -9,13 +9,13 @@ import 'package:flutter_instagram_storyboard/src/first_build_mixin.dart';
 class StoryPageContainerView extends StatefulWidget {
   final StoryButtonData buttonData;
   final VoidCallback onStoryComplete;
-  final PageController pageController;
-  final VoidCallback onClosePressed;
+  final PageController? pageController;
+  final VoidCallback? onClosePressed;
 
   const StoryPageContainerView({
-    Key key,
-    @required this.buttonData,
-    @required this.onStoryComplete,
+    Key? key,
+    required this.buttonData,
+    required this.onStoryComplete,
     this.pageController,
     this.onClosePressed,
   }) : super(key: key);
@@ -26,7 +26,7 @@ class StoryPageContainerView extends StatefulWidget {
 
 class _StoryPageContainerViewState extends State<StoryPageContainerView>
     with FirstBuildMixin {
-  StoryTimelineController _storyController;
+  StoryTimelineController? _storyController;
   final Stopwatch _stopwatch = Stopwatch();
   Offset _pointerDownPosition = Offset.zero;
   int _pointerDownMillis = 0;
@@ -37,7 +37,7 @@ class _StoryPageContainerViewState extends State<StoryPageContainerView>
     _storyController =
         widget.buttonData.storyController ?? StoryTimelineController();
     _stopwatch.start();
-    _storyController.addListener(_onTimelineEvent);
+    _storyController!.addListener(_onTimelineEvent);
     super.initState();
   }
 
@@ -51,7 +51,7 @@ class _StoryPageContainerViewState extends State<StoryPageContainerView>
       return;
     }
     _pageValue = widget.pageController?.page ?? 0.0;
-    _storyController._setTimelineAvailable(_timelineAvailable);
+    _storyController!._setTimelineAvailable(_timelineAvailable);
   }
 
   bool get _timelineAvailable {
@@ -66,7 +66,7 @@ class _StoryPageContainerViewState extends State<StoryPageContainerView>
   }
 
   Widget _buildCloseButton() {
-    Widget closeButton;
+    Widget? closeButton;
     if (widget.buttonData.closeButton != null) {
       closeButton = widget.buttonData.closeButton;
     } else {
@@ -77,7 +77,7 @@ class _StoryPageContainerViewState extends State<StoryPageContainerView>
           padding: EdgeInsets.zero,
           onPressed: () {
             if (widget.onClosePressed != null) {
-              widget.onClosePressed.call();
+              widget.onClosePressed!.call();
             } else {
               Navigator.of(context).pop();
             }
@@ -107,7 +107,7 @@ class _StoryPageContainerViewState extends State<StoryPageContainerView>
       child: Row(
         children: [
           const Expanded(child: SizedBox()),
-          closeButton,
+          closeButton!,
         ],
       ),
     );
@@ -148,7 +148,7 @@ class _StoryPageContainerViewState extends State<StoryPageContainerView>
     if (!mounted) {
       return false;
     }
-    final storyWidth = context.size.width;
+    final storyWidth = context.size!.width;
     return position.dx <= (storyWidth * .499);
   }
 
@@ -157,7 +157,7 @@ class _StoryPageContainerViewState extends State<StoryPageContainerView>
       onPointerDown: (PointerDownEvent event) {
         _pointerDownMillis = _stopwatch.elapsedMilliseconds;
         _pointerDownPosition = event.position;
-        _storyController.pause();
+        _storyController!.pause();
       },
       onPointerUp: (PointerUpEvent event) {
         final pointerUpMillis = _stopwatch.elapsedMilliseconds;
@@ -170,14 +170,14 @@ class _StoryPageContainerViewState extends State<StoryPageContainerView>
             if (distance < 5.0) {
               final isLeft = _isLeftPartOfStory(position);
               if (isLeft) {
-                _storyController.previousSegment();
+                _storyController!.previousSegment();
               } else {
-                _storyController.nextSegment();
+                _storyController!.nextSegment();
               }
             }
           }
         }
-        _storyController.unpause();
+        _storyController!.unpause();
       },
       child: SizedBox(
         width: double.infinity,
@@ -204,7 +204,7 @@ class _StoryPageContainerViewState extends State<StoryPageContainerView>
   void dispose() {
     widget.pageController?.removeListener(_onPageControllerUpdate);
     _stopwatch.stop();
-    _storyController.removeListener(_onTimelineEvent);
+    _storyController!.removeListener(_onTimelineEvent);
     super.dispose();
   }
 
@@ -232,7 +232,7 @@ class SegmentEvent{
 typedef StoryTimelineCallback = Function(SegmentEvent);
 
 class StoryTimelineController {
-  _StoryTimelineState _state;
+  _StoryTimelineState? _state;
 
   final HashSet<StoryTimelineCallback> _listeners =
       HashSet<StoryTimelineCallback>();
@@ -285,13 +285,13 @@ class StoryTimelineController {
 }
 
 class StoryTimeline extends StatefulWidget {
-  final StoryTimelineController controller;
+  final StoryTimelineController? controller;
   final StoryButtonData buttonData;
 
   const StoryTimeline({
-    Key key,
-    @required this.controller,
-    @required this.buttonData,
+    Key? key,
+    required this.controller,
+    required this.buttonData,
   }) : super(key: key);
 
   @override
@@ -299,7 +299,7 @@ class StoryTimeline extends StatefulWidget {
 }
 
 class _StoryTimelineState extends State<StoryTimeline> {
-  Timer _timer;
+  late Timer _timer;
   int _accumulatedTime = 0;
   int _maxAccumulator = 0;
   bool _isPaused = false;
@@ -314,7 +314,7 @@ class _StoryTimelineState extends State<StoryTimeline> {
       ),
       _onTimer,
     );
-    widget.controller._state = this;
+    widget.controller!._state = this;
     super.initState();
     if (widget.buttonData.storyWatchedContract ==
         StoryWatchedContract.onStoryStart) {
@@ -350,7 +350,7 @@ class _StoryTimelineState extends State<StoryTimeline> {
         StoryWatchedContract.onStoryEnd) {
       widget.buttonData.markAsWatched();
     }
-    widget.controller._onStoryComplete(0);
+    widget.controller!._onStoryComplete(0);
   }
 
   void _onSegmentComplete() {
@@ -358,7 +358,7 @@ class _StoryTimelineState extends State<StoryTimeline> {
         StoryWatchedContract.onSegmentEnd) {
       widget.buttonData.markAsWatched();
     }
-    widget.controller._onSegmentComplete(_curSegmentIndex);
+    widget.controller!._onSegmentComplete(_curSegmentIndex);
   }
 
   bool get _isLastSegment {
@@ -385,7 +385,7 @@ class _StoryTimelineState extends State<StoryTimeline> {
   void nextSegment() {
     if (_isLastSegment) {
       _accumulatedTime = _maxAccumulator;
-      widget.controller._onStoryComplete(0);
+      widget.controller!._onStoryComplete(0);
     } else {
       _accumulatedTime = 0;
       _curSegmentIndex++;
@@ -447,13 +447,13 @@ class _TimelinePainter extends CustomPainter {
   final double thikness;
 
   _TimelinePainter({
-    @required this.fillColor,
-    @required this.backgroundColor,
-    @required this.curSegmentIndex,
-    @required this.numSegments,
-    @required this.percent,
-    @required this.spacing,
-    @required this.thikness,
+    required this.fillColor,
+    required this.backgroundColor,
+    required this.curSegmentIndex,
+    required this.numSegments,
+    required this.percent,
+    required this.spacing,
+    required this.thikness,
   });
 
   @override

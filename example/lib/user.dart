@@ -5,37 +5,37 @@ import 'dog.dart';
 enum UserState { available, away, busy }
 
 class User {
-  String id;
-  String username;
-  String name;
-  String nome_azienda;
-  String email;
-  String password;
-  String apiToken;
-  String deviceToken;
-  String phone;
-  String address;
-  String bio;
+  String? id;
+  String? username;
+  String? name;
+  String? nome_azienda;
+  String? email;
+  String? password;
+  String? apiToken;
+  String? deviceToken;
+  String? phone;
+  String? address;
+  String? bio;
   Media image=Media();
-  DateTime created_at;
-  Dog dog;
-  DateTime banned_to;
+  DateTime? created_at;
+  Dog? dog;
+  DateTime? banned_to;
 
   // used for indicate if client logged in or not
-  bool auth;
+  bool? auth;
   //bool fattura;
-  bool notif;
-  bool localiz;
+  bool? notif;
+  bool? localiz;
   //String userInvitationCode;
 
-  String imagePath;
-  int postCount;
-  int followers;
-  int following;
-  bool private;
-  bool verified;
+  String? imagePath;
+  int? postCount;
+  int? followers;
+  int? following;
+  bool? private;
+  bool? verified;
 
-  String segnalatoDa;
+  String? segnalatoDa;
   //  String role;
 
   User();
@@ -132,7 +132,7 @@ class User {
     return name!=null && name!='username' && dog?.nome!=null;
   }
 
-  String displayName() {
+  String? displayName() {
     return nome_azienda?? name;
   }
 }

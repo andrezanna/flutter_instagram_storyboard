@@ -2,26 +2,26 @@
 import 'user.dart';
 
 class Dog{
-  String id;
-  String nome;
-  DateTime dataNascita;
-  int taglia;
-  String bio;
-  bool sesso;//true maschio, false femmina
-  User user;
+  String? id;
+  String? nome;
+  DateTime? dataNascita;
+  int? taglia;
+  String? bio;
+  bool? sesso;//true maschio, false femmina
+  User? user;
 
   //campi scheda alimentare
-  String attivita;
-  int passeggiate;
-  double peso;
-  String preferenza;
+  String? attivita;
+  int? passeggiate;
+  double? peso;
+  String? preferenza;
 
-  String imagePath;
+  String? imagePath;
   int age=0;
 
-  double latitude;
-  double longitude;
-  double distance;
+  double? latitude;
+  double? longitude;
+  double? distance;
 
   Dog();
 
@@ -87,7 +87,7 @@ class Dog{
     try {
       final now = DateTime.now();
       age = (now
-          .difference(dataNascita)
+          .difference(dataNascita!)
           .inDays / 365).floor();
     }catch(e){
       age=0;

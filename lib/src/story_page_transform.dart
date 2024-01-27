@@ -18,7 +18,7 @@ abstract class IStoryPageTransform {
     double delta,
   );
 
-  ScrollPhysics get pageScrollPhysics;
+  ScrollPhysics? get pageScrollPhysics;
 }
 
 /// If you don't need any transformation between stories
@@ -37,7 +37,7 @@ class StoryPageNoTransform implements IStoryPageTransform {
   }
 
   @override
-  ScrollPhysics get pageScrollPhysics => null;
+  ScrollPhysics? get pageScrollPhysics => null;
 }
 
 class StoryPage3DTransform implements IStoryPageTransform {

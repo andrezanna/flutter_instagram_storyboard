@@ -2,7 +2,6 @@ import 'package:example/story.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_instagram_storyboard/flutter_instagram_storyboard.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:story_view/story_view.dart';
 
 import 'user.dart';
 
@@ -11,7 +10,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key key}) : super(key: key);
+  const MyApp({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
@@ -28,7 +27,7 @@ class MyApp extends StatelessWidget {
 
 class StoryExamplePage extends StatefulWidget {
   const StoryExamplePage({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -37,75 +36,8 @@ class StoryExamplePage extends StatefulWidget {
 
 class _StoryExamplePageState extends State<StoryExamplePage> {
   List<Story> stories = [];
-  Map<User, List<StoryItem>> storyItems = {};
   static const double _borderRadius = 100.0;
   final StoryTimelineController _controller = StoryTimelineController();
-
-  Widget _createDummyPage({
-    @required StoryItem storyItem,
-    bool addBottomBar = true,
-  }) {
-    return StoryPageScaffold(
-      body: Stack(
-        children: [
-          storyItem.view,
-          Align(
-            alignment: Alignment.topCenter,
-            child: Container(
-              width: double.infinity,
-              height: 250,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    colors: [Colors.black38, Colors.transparent],
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.only(top: 64.0, right: 8.0),
-                child: Align(
-                  alignment: Alignment.topRight,
-                  child: Container(
-                    width: 48,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        InkWell(
-                          onTap: () {},
-                          child: Column(children: [
-                            Icon(
-                              Icons.favorite,
-                              color: Colors.white,
-                            ),
-                            Text(
-                              "1",
-                            ),
-                          ]),
-                        ),
-                        SizedBox(
-                          height: 30,
-                        ),
-                        InkWell(
-                          onTap: () {},
-                          child: Column(children: [
-                            Icon(
-                              Icons.remove_red_eye_outlined,
-                            ),
-                            Text(
-                              "1",
-                            ),
-                          ]),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 
   Widget _buildButtonChild(String text) {
     return Padding(
@@ -203,26 +135,4 @@ class _StoryExamplePageState extends State<StoryExamplePage> {
     );
   }
 
-  StoryItem getStoryItem(Story event, StoryController controller, int index) {
-    StoryItem story;
-    if (event.media.isVideo) {
-      story = StoryItem.pageVideo(event.media.url,
-          caption: event.caption,
-          likes: event.likes,
-          views: event.views,
-          hasUserLike: false,
-          controller: controller,
-          shown: event.watched);
-    } else {
-      story = StoryItem.pageImage(
-          url: event.media.wide_thumb,
-          caption: event.caption,
-          likes: event.likes,
-          views: event.views,
-          hasUserLike: false,
-          controller: controller,
-          shown: event.watched);
-    }
-    return story;
-  }
 }

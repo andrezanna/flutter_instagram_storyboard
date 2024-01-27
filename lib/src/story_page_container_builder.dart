@@ -10,9 +10,9 @@ class StoryPageContainerBuilder extends StatefulWidget {
   final StoryContainerSettings settings;
 
   const StoryPageContainerBuilder({
-    Key key,
-    @required this.settings,
-    @required this.animation,
+    Key? key,
+    required this.settings,
+    required this.animation,
   }) : super(key: key);
 
   @override
@@ -22,8 +22,8 @@ class StoryPageContainerBuilder extends StatefulWidget {
 
 class _StoryPageContainerBuilderState extends State<StoryPageContainerBuilder>
     with SetStateAfterFrame, FirstBuildMixin {
-  PageController _pageController;
-  IStoryPageTransform _storyPageTransform;
+  PageController? _pageController;
+  late IStoryPageTransform _storyPageTransform;
   static const double kMaxPageOverscroll = .2;
   int _currentPage = 0;
   double _pageDelta = 0.0;
@@ -42,15 +42,15 @@ class _StoryPageContainerBuilderState extends State<StoryPageContainerBuilder>
     _pageController = PageController(
       initialPage: _currentPage,
     );
-    _pageController.addListener(() {
+    _pageController!.addListener(() {
       setState(() {
-        _currentPage = _pageController.page.floor();
-        _pageDelta = _pageController.page - _currentPage;
+        _currentPage = _pageController!.page!.floor();
+        _pageDelta = _pageController!.page! - _currentPage;
         final isFirst = _currentPage == 0;
         final isLast =
             _currentPage == widget.settings.allButtonDatas.length - 1;
         if (isFirst) {
-          final offset = _pageController.offset;
+          final offset = _pageController!.offset;
           if (offset < 0) {
             _pageDelta = 1.0 - (offset.abs() / _pageWidth);
             _bgOpacityControlValue = 1.0 - _pageDelta;
@@ -60,7 +60,7 @@ class _StoryPageContainerBuilderState extends State<StoryPageContainerBuilder>
             }
           }
         } else if (isLast) {
-          final offset = _totalWidth - _pageController.offset;
+          final offset = _totalWidth - _pageController!.offset;
           if (offset < 0) {
             _pageDelta = (offset.abs() / _pageWidth);
             _bgOpacityControlValue = _pageDelta;
@@ -130,14 +130,14 @@ class _StoryPageContainerBuilderState extends State<StoryPageContainerBuilder>
 
   void _afterFirstBuild() {
     if (mounted) {
-      _pageWidth = context.size.width;
+      _pageWidth = context.size!.width;
       _totalWidth = _pageWidth * (widget.settings.allButtonDatas.length - 1);
     }
   }
 
   Future _onStoryComplete() async {
     if (_curPageIndex < widget.settings.allButtonDatas.length - 1) {
-      _pageController.animateToPage(
+      _pageController!.animateToPage(
         _curPageIndex + 1,
         duration: kThemeAnimationDuration,
         curve: Curves.linear,
@@ -148,10 +148,10 @@ class _StoryPageContainerBuilderState extends State<StoryPageContainerBuilder>
   }
 
   int get _curPageIndex {
-    if (!_pageController.hasClients) {
+    if (!_pageController!.hasClients) {
       return _currentPage;
     }
-    return _pageController.page?.floor() ?? 0;
+    return _pageController!.page?.floor() ?? 0;
   }
 
   StoryButtonData get _activeButtonData {
@@ -160,7 +160,7 @@ class _StoryPageContainerBuilderState extends State<StoryPageContainerBuilder>
 
   @override
   void dispose() {
-    _pageController.dispose();
+    _pageController!.dispose();
     super.dispose();
   }
 
@@ -195,14 +195,14 @@ class _StoryPageContainerBuilderState extends State<StoryPageContainerBuilder>
             clipper: _PageClipper(
               borderRadius:
                   widget.settings.buttonData.borderDecoration.borderRadius
-                      ?.resolve(
+                      !.resolve(
                         null,
                       )
                       .bottomLeft,
               startX: _activeButtonData.buttonCenterPosition?.dx ??
-                  widget.settings.tapPosition.dx,
+                  widget.settings.tapPosition!.dx,
               startY: _activeButtonData.buttonCenterPosition?.dy ??
-                  widget.settings.tapPosition.dy,
+                  widget.settings.tapPosition!.dy,
               animationValue: animationValue,
             ),
             child: Scaffold(
@@ -260,10 +260,10 @@ class _PageClipper extends CustomClipper<RRect> {
   final double animationValue;
 
   _PageClipper({
-    @required this.startX,
-    @required this.startY,
-    @required this.animationValue,
-    @required this.borderRadius,
+    required this.startX,
+    required this.startY,
+    required this.animationValue,
+    required this.borderRadius,
   });
 
   @override

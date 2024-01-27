@@ -4,20 +4,20 @@ import 'media.dart';
 import 'user.dart';
 
 class Story {
-  String id;
-  User user;
-  Media media;
-  String caption;
-  int likes;
-  int comments;
-  bool suspended;
-  bool active;
-  String suspended_message;
-  bool watched;
+  String? id;
+  User? user;
+  Media? media;
+  String? caption;
+  int? likes;
+  int? comments;
+  bool? suspended;
+  bool? active;
+  String? suspended_message;
+  bool? watched;
 
-  int views;
+  int? views;
 
-  PostFile picked;
+  PostFile? picked;
 
   Story();
 

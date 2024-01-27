@@ -12,15 +12,15 @@ class StoryButton extends StatefulWidget {
   /// [allButtonDatas] required to be able to page through
   /// all stories
   final List<StoryButtonData> allButtonDatas;
-  final IStoryPageTransform pageTransform;
+  final IStoryPageTransform? pageTransform;
   final ScrollController storyListViewController;
 
   const StoryButton({
-    Key key,
-    @required this.onPressed,
-    @required this.buttonData,
-    @required this.allButtonDatas,
-    @required this.storyListViewController,
+    Key? key,
+    required this.onPressed,
+    required this.buttonData,
+    required this.allButtonDatas,
+    required this.storyListViewController,
     this.pageTransform,
   }) : super(key: key);
 
@@ -31,7 +31,7 @@ class StoryButton extends StatefulWidget {
 class _StoryButtonState extends State<StoryButton>
     with SetStateAfterFrame, FirstBuildMixin
     implements IButtonPositionable, IWatchMarkable {
-  double _buttonWidth;
+  double? _buttonWidth;
 
   @override
   void initState() {
@@ -68,7 +68,7 @@ class _StoryButtonState extends State<StoryButton>
   }
 
   @override
-  Offset get centerPosition {
+  Offset? get centerPosition {
     if (!mounted) {
       return null;
     }
@@ -82,7 +82,7 @@ class _StoryButtonState extends State<StoryButton>
   }
 
   @override
-  Offset get rightPosition {
+  Offset? get rightPosition {
     if (!mounted) {
       return null;
     }
@@ -96,7 +96,7 @@ class _StoryButtonState extends State<StoryButton>
   }
 
   @override
-  Offset get leftPosition {
+  Offset? get leftPosition {
     if (!mounted) {
       return null;
     }
@@ -198,21 +198,21 @@ class StoryButtonData {
 
   int currentSegmentIndex = 0;
 
-  IButtonPositionable _buttonPositionable;
-  IWatchMarkable _iWatchMarkable;
+  IButtonPositionable? _buttonPositionable;
+  IWatchMarkable? _iWatchMarkable;
 
-  final StoryTimelineController storyController;
+  final StoryTimelineController? storyController;
   final StoryWatchedContract storyWatchedContract;
-  final Curve pageAnimationCurve;
-  final Duration pageAnimationDuration;
+  final Curve? pageAnimationCurve;
+  final Duration? pageAnimationDuration;
   final double aspectRatio;
   final BoxDecoration buttonDecoration;
   final BoxDecoration borderDecoration;
   final double borderOffset;
-  final InteractiveInkFeatureFactory inkFeatureFactory;
+  final InteractiveInkFeatureFactory? inkFeatureFactory;
   final Widget child;
   final List<Widget> storyPages;
-  final Widget closeButton;
+  final Widget? closeButton;
   final Duration segmentDuration;
   final BoxDecoration containerBackgroundDecoration;
   final Color timelineFillColor;
@@ -220,21 +220,21 @@ class StoryButtonData {
   final Color defaultCloseButtonColor;
   final double timelineThikness;
   final double timelineSpacing;
-  final EdgeInsets timlinePadding;
+  final EdgeInsets? timlinePadding;
   final IsVisibleCallback isVisibleCallback;
-  final Function storyWatched;
+  final Function? storyWatched;
 
   /// Usualy this is required for the final story
   /// to pop it out to its button mosition
-  Offset get buttonCenterPosition {
+  Offset? get buttonCenterPosition {
     return _buttonPositionable?.centerPosition;
   }
 
-  Offset get buttonLeftPosition {
+  Offset? get buttonLeftPosition {
     return _buttonPositionable?.leftPosition;
   }
 
-  Offset get buttonRightPosition {
+  Offset? get buttonRightPosition {
     return _buttonPositionable?.rightPosition;
   }
 
@@ -265,9 +265,9 @@ class StoryButtonData {
     this.defaultCloseButtonColor = Colors.white,
     this.timelineBackgroundColor = const Color.fromARGB(255, 200, 200, 200),
     this.closeButton,
-    @required this.storyPages,
-    @required this.child,
-    @required this.segmentDuration,
+    required this.storyPages,
+    required this.child,
+    required this.segmentDuration,
     this.containerBackgroundDecoration = const BoxDecoration(
       color: Color.fromARGB(255, 0, 0, 0),
     ),
@@ -301,7 +301,7 @@ abstract class IWatchMarkable {
 }
 
 abstract class IButtonPositionable {
-  Offset get centerPosition;
-  Offset get leftPosition;
-  Offset get rightPosition;
+  Offset? get centerPosition;
+  Offset? get leftPosition;
+  Offset? get rightPosition;
 }

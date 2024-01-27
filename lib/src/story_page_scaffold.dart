@@ -6,24 +6,24 @@ import 'package:flutter/material.dart';
 /// but if you're ok with this, feel free to use it as a base for
 /// your story pages
 class StoryPageScaffold extends StatefulWidget {
-  final PreferredSizeWidget appBar;
+  final PreferredSizeWidget? appBar;
   final Widget body;
-  final int likesCount;
-  final int watchCount;
-  final String text;
-  final bool userLike;
-  final BorderRadius borderRadius;
-  final TextStyle textStyle;
-  final TextStyle iconTextStyle;
-  final Function onStoryLike;
-  final Function onWatchPress;
-  final Widget eyeIcon;
-  final Widget favoriteIcon;
+  final int? likesCount;
+  final int? watchCount;
+  final String? text;
+  final bool? userLike;
+  final BorderRadius? borderRadius;
+  final TextStyle? textStyle;
+  final TextStyle? iconTextStyle;
+  final Function? onStoryLike;
+  final Function? onWatchPress;
+  final Widget? eyeIcon;
+  final Widget? favoriteIcon;
 
   const StoryPageScaffold({
-    Key key,
+    Key? key,
     this.appBar,
-    @required this.body,
+    required this.body,
     this.borderRadius,
     this.likesCount,
     this.watchCount,
@@ -42,9 +42,9 @@ class StoryPageScaffold extends StatefulWidget {
 }
 
 class _StoryPageScaffoldState extends State<StoryPageScaffold> {
-  int likesCount;
-  int watchCount;
-  bool userLike;
+  int? likesCount;
+  int? watchCount;
+  bool? userLike;
   @override
   void initState() {
     likesCount = widget.likesCount;
@@ -92,7 +92,7 @@ class _StoryPageScaffoldState extends State<StoryPageScaffold> {
             children: [
               Expanded(
                 child: Text(
-                  widget.text,
+                  widget.text!,
                   style: widget.textStyle,
                   textScaleFactor: 1.0,
                 ),
@@ -100,15 +100,15 @@ class _StoryPageScaffoldState extends State<StoryPageScaffold> {
               InkWell(
                 onTap: () {
                   setState(() {
-                    userLike = !userLike;
-                    likesCount = likesCount + (userLike ? 1 : -1);
+                    userLike = !userLike!;
+                    likesCount = likesCount! + (userLike! ? 1 : -1);
                   });
-                  widget.onStoryLike();
+                  widget.onStoryLike!();
                 },
                 child: Row(children: [
                   ColorFiltered(
                     colorFilter: ColorFilter.mode(
-                        userLike
+                        userLike!
                             ? Theme.of(context).primaryColor
                             : Colors.white,
                         BlendMode.srcIn),
@@ -125,10 +125,10 @@ class _StoryPageScaffoldState extends State<StoryPageScaffold> {
               ),
               InkWell(
                 onTap: () {
-                  widget.onWatchPress();
+                  widget.onWatchPress!();
                 },
                 child: Row(children: [
-                  widget.eyeIcon,
+                  widget.eyeIcon!,
                   Text(
                     "$watchCount",
                     style: widget.iconTextStyle,
@@ -157,11 +157,11 @@ class GradientTransition extends StatelessWidget {
   final GradientTransitionDirection gradientTransitionDirection;
 
   const GradientTransition({
-    Key key,
-    @required this.width,
-    @required this.height,
+    Key? key,
+    required this.width,
+    required this.height,
     this.bottomPositioned = false,
-    @required this.baseColor,
+    required this.baseColor,
     this.isReversed = false,
     this.gradientTransitionDirection = GradientTransitionDirection.vertical,
   }) : super(key: key);

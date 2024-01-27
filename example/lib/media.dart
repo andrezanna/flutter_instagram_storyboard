@@ -1,15 +1,15 @@
 
 class Media {
-  String id;
-  String name;
-  String file_name;
-  String url;
-  String thumb;
-  String wide_thumb;
-  String icon;
-  String size;
-  String mime_type;
-  String collection;
+  String? id;
+  String? name;
+  String? file_name;
+  String? url;
+  String? thumb;
+  String? wide_thumb;
+  String? icon;
+  String? size;
+  String? mime_type;
+  String? collection;
   bool isVideo=false;
 
   Media() {
