@@ -87,7 +87,7 @@ class _StoryListViewState extends State<StoryListView> {
           bottom: widget.paddingBottom,
         ),
         child: ListView.builder(
-          controller: _scrollController,
+          //controller: _scrollController,
           physics: widget.physics,
           scrollDirection: Axis.horizontal,
           itemBuilder: (c, int index) {
