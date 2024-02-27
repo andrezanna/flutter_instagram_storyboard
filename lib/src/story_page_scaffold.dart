@@ -19,6 +19,7 @@ class StoryPageScaffold extends StatefulWidget {
   final Function? onWatchPress;
   final Widget? eyeIcon;
   final Widget? favoriteIcon;
+  final Widget? userWidget;
 
   const StoryPageScaffold({
     Key? key,
@@ -35,6 +36,7 @@ class StoryPageScaffold extends StatefulWidget {
     this.iconTextStyle,
     this.eyeIcon,
     this.favoriteIcon,
+    this.userWidget,
   }) : super(key: key);
 
   @override
@@ -75,6 +77,11 @@ class _StoryPageScaffoldState extends State<StoryPageScaffold> {
                   baseColor: Colors.black.withOpacity(.7),
                   isReversed: true,
                 ),
+              ),
+              Positioned(
+                top: 24,
+                left: 24,
+                child: widget.userWidget??SizedBox(),
               ),
             ],
           ),

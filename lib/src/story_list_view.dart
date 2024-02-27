@@ -17,6 +17,7 @@ class StoryListView extends StatefulWidget {
   final bool safeAreaBottom;
   final double listHeight;
   final double buttonWidth;
+  final ScrollController? scrollController;
 
   const StoryListView({
     Key? key,
@@ -32,6 +33,7 @@ class StoryListView extends StatefulWidget {
     this.buttonWidth = 100.0,
     this.safeAreaTop = true,
     this.safeAreaBottom = true,
+    this.scrollController,
   }) : super(key: key);
 
   @override
@@ -39,10 +41,11 @@ class StoryListView extends StatefulWidget {
 }
 
 class _StoryListViewState extends State<StoryListView> {
-  final ScrollController _scrollController = ScrollController();
+  late final ScrollController _scrollController;
 
   @override
   void initState() {
+    _scrollController=widget.scrollController??ScrollController();
     super.initState();
   }
 
