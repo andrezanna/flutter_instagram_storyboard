@@ -99,11 +99,12 @@ class _StoryPageScaffoldState extends State<StoryPageScaffold> {
             children: [
               Expanded(
                 child: Text(
-                  widget.text!,
+                  widget.text??'',
                   style: widget.textStyle,
                   textScaleFactor: 1.0,
                 ),
               ),
+              if(widget.favoriteIcon!=null)
               InkWell(
                 onTap: () {
                   setState(() {
@@ -113,6 +114,7 @@ class _StoryPageScaffoldState extends State<StoryPageScaffold> {
                   widget.onStoryLike!();
                 },
                 child: Row(children: [
+
                   ColorFiltered(
                     colorFilter: ColorFilter.mode(
                         userLike!
@@ -127,6 +129,7 @@ class _StoryPageScaffoldState extends State<StoryPageScaffold> {
                   ),
                 ]),
               ),
+              if(widget.eyeIcon!=null)...[
               SizedBox(
                 width: 30,
               ),
@@ -142,6 +145,7 @@ class _StoryPageScaffoldState extends State<StoryPageScaffold> {
                   ),
                 ]),
               ),
+    ],
             ],
           ),
         ),
