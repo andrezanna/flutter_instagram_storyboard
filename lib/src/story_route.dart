@@ -67,5 +67,5 @@ class StoryRoute extends ModalRoute {
   bool get barrierDismissible => false;
 
   @override
-  bool get opaque => false;
+  bool get opaque => true;
 }
