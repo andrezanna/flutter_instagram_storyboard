@@ -110,6 +110,7 @@ class _StoryButtonState extends State<StoryButton>
     setState(() {
       widget.buttonData.markAsWatched();
     });
+    if(widget.buttonData.storyPages.isNotEmpty)
     widget.onPressed.call(widget.buttonData);
   }
 
