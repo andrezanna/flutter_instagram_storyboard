@@ -6,4 +6,5 @@ export 'src/story_page_scaffold.dart';
 export 'src/story_page_transform.dart';
 export 'src/story_route.dart';
 export 'src/story_page_container_view.dart';
+export 'src/story.dart';
 
