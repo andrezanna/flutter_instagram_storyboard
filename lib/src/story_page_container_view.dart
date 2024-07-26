@@ -133,15 +133,7 @@ class _StoryPageContainerViewState extends State<StoryPageContainerView>
   }
 
   Widget _buildPageContent() {
-    if (widget.buttonData.storyPages.isEmpty) {
-      return Container(
-        color: Colors.orange,
-        child: const Center(
-          child: Text('No pages'),
-        ),
-      );
-    }
-    return widget.buttonData.storyPages[_curSegmentIndex];
+    return widget.buttonData.storyBuilder(context,_curSegmentIndex)!;
   }
 
   bool _isLeftPartOfStory(Offset position) {
@@ -366,7 +358,7 @@ class _StoryTimelineState extends State<StoryTimeline> {
   }
 
   int get _numSegments {
-    return widget.buttonData.storyPages.length;
+    return widget.buttonData.storiesCount;
   }
 
   set _curSegmentIndex(int value) {

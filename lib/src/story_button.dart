@@ -110,7 +110,6 @@ class _StoryButtonState extends State<StoryButton>
     setState(() {
       widget.buttonData.markAsWatched();
     });
-    if(widget.buttonData.storyPages.isNotEmpty)
     widget.onPressed.call(widget.buttonData);
   }
 
@@ -212,7 +211,8 @@ class StoryButtonData {
   final double borderOffset;
   final InteractiveInkFeatureFactory? inkFeatureFactory;
   final Widget child;
-  final List<Widget> storyPages;
+  final NullableIndexedWidgetBuilder storyBuilder;
+  final int storiesCount;
   final Widget? closeButton;
   final Duration segmentDuration;
   final BoxDecoration containerBackgroundDecoration;
@@ -266,7 +266,8 @@ class StoryButtonData {
     this.defaultCloseButtonColor = Colors.white,
     this.timelineBackgroundColor = const Color.fromARGB(255, 200, 200, 200),
     this.closeButton,
-    required this.storyPages,
+    required this.storyBuilder,
+    required this.storiesCount,
     required this.child,
     required this.segmentDuration,
     this.containerBackgroundDecoration = const BoxDecoration(

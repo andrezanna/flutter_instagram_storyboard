@@ -1,7 +1,6 @@
 import 'package:example/story.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_instagram_storyboard/flutter_instagram_storyboard.dart';
-import 'package:flutter_svg/svg.dart';
 
 import 'user.dart';
 
@@ -109,7 +108,8 @@ class _StoryExamplePageState extends State<StoryExamplePage> {
                 buttonDecoration: _buildButtonDecoration('car'),
                 child: _buildButtonChild('Want a new car?'),
                 borderDecoration: _buildBorderDecoration(Colors.red),
-                storyPages: [
+                storiesCount: 1,
+                storyBuilder: (context,index)=>
                   StoryPageScaffold(
                     likesCount: 3,
                     watchCount: 4,
@@ -125,7 +125,7 @@ class _StoryExamplePageState extends State<StoryExamplePage> {
                     favoriteIcon: Icon(Icons.favorite_border),
                     eyeIcon: Icon(Icons.remove_red_eye,color: Colors.white,),
                   )
-                ],
+                ,
                 segmentDuration: const Duration(seconds: 3),
               ),
             ],
