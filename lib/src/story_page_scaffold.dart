@@ -1,42 +1,22 @@
 import 'package:flutter/material.dart';
 
+import 'story.dart';
+
 /// This scaffold has a transparent background and
 /// rounded corners around its body. You don't necessarily
 /// have to use this scaffold. You can use your own page structure
 /// but if you're ok with this, feel free to use it as a base for
 /// your story pages
 class StoryPageScaffold extends StatefulWidget {
-  final PreferredSizeWidget? appBar;
-  final Widget body;
-  final int? likesCount;
-  final int? watchCount;
-  final String? text;
-  final bool? userLike;
-  final BorderRadius? borderRadius;
-  final TextStyle? textStyle;
-  final TextStyle? iconTextStyle;
+  final Story story;
   final Function? onStoryLike;
-  final Function? onWatchPress;
-  final Widget? eyeIcon;
-  final Widget? favoriteIcon;
-  final Widget? userWidget;
+  final Function? onWatchPressed;
 
   const StoryPageScaffold({
     Key? key,
-    this.appBar,
-    required this.body,
-    this.borderRadius,
-    this.likesCount,
-    this.watchCount,
-    this.text,
-    this.userLike,
+    required this.story,
     this.onStoryLike,
-    this.onWatchPress,
-    this.textStyle,
-    this.iconTextStyle,
-    this.eyeIcon,
-    this.favoriteIcon,
-    this.userWidget,
+    this.onWatchPressed
   }) : super(key: key);
 
   @override
@@ -44,32 +24,21 @@ class StoryPageScaffold extends StatefulWidget {
 }
 
 class _StoryPageScaffoldState extends State<StoryPageScaffold> {
-  int? likesCount;
-  int? watchCount;
-  bool? userLike;
-  @override
-  void initState() {
-    likesCount = widget.likesCount;
-    watchCount = widget.watchCount;
-    userLike = widget.userLike;
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: widget.appBar,
       backgroundColor: Colors.transparent,
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: ClipRRect(
-          borderRadius: widget.borderRadius ??
+          borderRadius:
               BorderRadius.circular(
                 12.0,
               ),
           child: Stack(
             children: [
-              widget.body,
+              Image.asset(widget.story.image,fit: BoxFit.cover,),
               IgnorePointer(
                 child: GradientTransition(
                   width: double.infinity,
@@ -77,11 +46,6 @@ class _StoryPageScaffoldState extends State<StoryPageScaffold> {
                   baseColor: Colors.black.withOpacity(.7),
                   isReversed: true,
                 ),
-              ),
-              Positioned(
-                top: 24,
-                left: 24,
-                child: widget.userWidget??SizedBox(),
               ),
             ],
           ),
@@ -99,54 +63,44 @@ class _StoryPageScaffoldState extends State<StoryPageScaffold> {
             children: [
               Expanded(
                 child: Text(
-                  widget.text??'',
-                  style: widget.textStyle,
+                  widget.story.text??'',
+
                   textScaleFactor: 1.0,
                 ),
               ),
-              if(widget.favoriteIcon!=null)
+
               InkWell(
                 onTap: () {
                   setState(() {
-                    userLike = !userLike!;
-                    likesCount = likesCount! + (userLike! ? 1 : -1);
+                    widget.story.like = !widget.story.like;
                   });
-                  widget.onStoryLike!();
+                  if(widget.onStoryLike!=null) {
+                    widget.onStoryLike!();
+                  }
                 },
-                child: Row(children: [
-
-                  ColorFiltered(
-                    colorFilter: ColorFilter.mode(
-                        userLike!
-                            ? Theme.of(context).primaryColor
-                            : Colors.white,
-                        BlendMode.srcIn),
-                    child: widget.favoriteIcon,
-                  ),
-                  Text(
-                    "$likesCount",
-                    style: widget.iconTextStyle,
-                  ),
-                ]),
+                child: ColorFiltered(
+                  colorFilter: ColorFilter.mode(
+                      widget.story.like
+                          ? Theme.of(context).primaryColor
+                          : Colors.white,
+                      BlendMode.srcIn),
+                  child: Icon(Icons.favorite_border_rounded),
+                ),
               ),
-              if(widget.eyeIcon!=null)...[
+
               SizedBox(
                 width: 30,
               ),
               InkWell(
                 onTap: () {
-                  widget.onWatchPress!();
+                  if(widget.onWatchPressed!=null) {
+                    widget.onWatchPressed!();
+                  }
                 },
-                child: Row(children: [
-                  widget.eyeIcon!,
-                  Text(
-                    "$watchCount",
-                    style: widget.iconTextStyle,
-                  ),
-                ]),
+                child: Icon(Icons.remove_red_eye_outlined),
               ),
     ],
-            ],
+
           ),
         ),
       ),

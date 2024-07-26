@@ -1,4 +1,4 @@
-import 'package:example/story.dart';
+import 'package:flutter_instagram_storyboard/src/story.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_instagram_storyboard/flutter_instagram_storyboard.dart';
 
@@ -34,7 +34,13 @@ class StoryExamplePage extends StatefulWidget {
 }
 
 class _StoryExamplePageState extends State<StoryExamplePage> {
-  List<Story> stories = [];
+  List<Story> stories = [
+    Story(like: false, text: "prova1", image: 'assets/images/car.png'),
+    Story(like: true, text: "prova2", image: 'assets/images/house.png'),
+    Story(like: false, text: "prova3", image: 'assets/images/travel_1.png'),
+    Story(like: false, text: "prova4", image: 'assets/images/travel_2.png'),
+    Story(like: true, text: "prova5", image: 'assets/images/travel_3.png'),
+  ];
   static const double _borderRadius = 100.0;
   final StoryTimelineController _controller = StoryTimelineController();
 
@@ -108,24 +114,11 @@ class _StoryExamplePageState extends State<StoryExamplePage> {
                 buttonDecoration: _buildButtonDecoration('car'),
                 child: _buildButtonChild('Want a new car?'),
                 borderDecoration: _buildBorderDecoration(Colors.red),
-                storiesCount: 1,
-                storyBuilder: (context,index)=>
-                  StoryPageScaffold(
-                    likesCount: 3,
-                    watchCount: 4,
-                    userLike: true,
-                    text: "testo del prova",
-                    textStyle: TextStyle(color: Colors.white),
-                    onStoryLike: () {},
-                    onWatchPress: () {},
-                    body: Image.asset(
-                      'assets/images/car.png',
-                      fit: BoxFit.cover,
-                    ),
-                    favoriteIcon: Icon(Icons.favorite_border),
-                    eyeIcon: Icon(Icons.remove_red_eye,color: Colors.white,),
-                  )
-                ,
+                storiesCount: stories.length,
+                storyBuilder: (context, index) => StoryPageScaffold(
+                  story:stories[index],
+
+                ),
                 segmentDuration: const Duration(seconds: 3),
               ),
             ],
@@ -134,5 +127,4 @@ class _StoryExamplePageState extends State<StoryExamplePage> {
       ),
     );
   }
-
 }
