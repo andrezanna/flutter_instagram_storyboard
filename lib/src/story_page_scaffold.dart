@@ -38,7 +38,7 @@ class _StoryPageScaffoldState extends State<StoryPageScaffold> {
               ),
           child: Stack(
             children: [
-              Image.asset(widget.story.image,fit: BoxFit.cover,),
+              widget.story.body,
               IgnorePointer(
                 child: GradientTransition(
                   width: double.infinity,
@@ -46,6 +46,11 @@ class _StoryPageScaffoldState extends State<StoryPageScaffold> {
                   baseColor: Colors.black.withOpacity(.7),
                   isReversed: true,
                 ),
+              ),
+              Positioned(
+                top: 24,
+                left: 24,
+                child: widget.story.userWidget??SizedBox(),
               ),
             ],
           ),

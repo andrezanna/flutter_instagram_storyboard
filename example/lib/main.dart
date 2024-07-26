@@ -35,11 +35,11 @@ class StoryExamplePage extends StatefulWidget {
 
 class _StoryExamplePageState extends State<StoryExamplePage> {
   List<Story> stories = [
-    Story(like: false, text: "prova1", image: 'assets/images/car.png'),
-    Story(like: true, text: "prova2", image: 'assets/images/house.png'),
-    Story(like: false, text: "prova3", image: 'assets/images/travel_1.png'),
-    Story(like: false, text: "prova4", image: 'assets/images/travel_2.png'),
-    Story(like: true, text: "prova5", image: 'assets/images/travel_3.png'),
+    Story(like: false, text: "prova1", body: Image.asset('assets/images/car.png')),
+    Story(like: true, text: "prova2", body: Image.asset('assets/images/house.png')),
+    Story(like: false, text: "prova3", body: Image.asset('assets/images/travel_1.png')),
+    Story(like: false, text: "prova4", body: Image.asset('assets/images/travel_2.png')),
+    Story(like: true, text: "prova5", body: Image.asset('assets/images/travel_3.png')),
   ];
   static const double _borderRadius = 100.0;
   final StoryTimelineController _controller = StoryTimelineController();
