@@ -11,6 +11,7 @@ class StoryPageScaffold extends StatefulWidget {
   final Story story;
   final Function? onStoryLike;
   final Function? onSecondPressed;
+  final TextStyle? captionStyle;
   final Widget? likeIcon;
   final Widget? secondIcon;
 
@@ -19,6 +20,7 @@ class StoryPageScaffold extends StatefulWidget {
       required this.story,
       this.onStoryLike,
       this.onSecondPressed,
+        this.captionStyle,
       this.likeIcon,
       this.secondIcon})
       : super(key: key);
@@ -71,6 +73,7 @@ class _StoryPageScaffoldState extends State<StoryPageScaffold> {
               Expanded(
                 child: Text(
                   widget.story.text ?? '',
+                  style: widget.captionStyle??TextStyle(color: Colors.white),
                   textAlign: TextAlign.start,
                   textScaleFactor: 1.0,
                 ),

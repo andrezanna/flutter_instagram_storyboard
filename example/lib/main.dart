@@ -35,11 +35,11 @@ class StoryExamplePage extends StatefulWidget {
 
 class _StoryExamplePageState extends State<StoryExamplePage> {
   List<Story> stories = [
-    Story(like: false, text: "prova1", body: Image.asset('assets/images/car.png')),
-    Story(like: true, text: "prova2", body: Image.asset('assets/images/house.png')),
-    Story(like: false, text: "prova3", body: Image.asset('assets/images/travel_1.png')),
-    Story(like: false, text: "prova4", body: Image.asset('assets/images/travel_2.png')),
-    Story(like: true, text: "prova5", body: Image.asset('assets/images/travel_3.png')),
+    Story(like: false, text: "prova1", body: Image.asset('assets/images/car.png',fit: BoxFit.cover,)),
+    Story(like: true, text: "prova2", body: Image.asset('assets/images/house.png',fit: BoxFit.cover,)),
+    Story(like: false, text: "prova3", body: Image.asset('assets/images/travel_1.png',fit: BoxFit.cover,)),
+    Story(like: false, text: "prova4", body: Image.asset('assets/images/travel_2.png',fit: BoxFit.cover,)),
+    Story(like: true, text: "prova5", body: Image.asset('assets/images/travel_3.png',fit: BoxFit.cover,)),
   ];
   static const double _borderRadius = 100.0;
   final StoryTimelineController _controller = StoryTimelineController();
@@ -117,6 +117,8 @@ class _StoryExamplePageState extends State<StoryExamplePage> {
                 storiesCount: stories.length,
                 storyBuilder: (context, index) => StoryPageScaffold(
                   story:stories[index],
+                  likeIcon: Icon(Icons.favorite_border_rounded),
+                  secondIcon: Icon(Icons.add_box,color: Colors.white,),
 
                 ),
                 segmentDuration: const Duration(seconds: 3),
