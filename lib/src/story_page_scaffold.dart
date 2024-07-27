@@ -10,21 +10,24 @@ import 'story.dart';
 class StoryPageScaffold extends StatefulWidget {
   final Story story;
   final Function? onStoryLike;
-  final Function? onWatchPressed;
+  final Function? onSecondPressed;
+  final Widget? likeIcon;
+  final Widget? secondIcon;
 
-  const StoryPageScaffold({
-    Key? key,
-    required this.story,
-    this.onStoryLike,
-    this.onWatchPressed
-  }) : super(key: key);
+  const StoryPageScaffold(
+      {Key? key,
+      required this.story,
+      this.onStoryLike,
+      this.onSecondPressed,
+      this.likeIcon,
+      this.secondIcon})
+      : super(key: key);
 
   @override
   State<StoryPageScaffold> createState() => _StoryPageScaffoldState();
 }
 
 class _StoryPageScaffoldState extends State<StoryPageScaffold> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,10 +35,9 @@ class _StoryPageScaffoldState extends State<StoryPageScaffold> {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: ClipRRect(
-          borderRadius:
-              BorderRadius.circular(
-                12.0,
-              ),
+          borderRadius: BorderRadius.circular(
+            12.0,
+          ),
           child: Stack(
             children: [
               widget.story.body,
@@ -50,7 +52,7 @@ class _StoryPageScaffoldState extends State<StoryPageScaffold> {
               Positioned(
                 top: 24,
                 left: 24,
-                child: widget.story.userWidget??SizedBox(),
+                child: widget.story.userWidget ?? SizedBox(),
               ),
             ],
           ),
@@ -68,18 +70,17 @@ class _StoryPageScaffoldState extends State<StoryPageScaffold> {
             children: [
               Expanded(
                 child: Text(
-                  widget.story.text??'',
-
+                  widget.story.text ?? '',
+                  textAlign: TextAlign.start,
                   textScaleFactor: 1.0,
                 ),
               ),
-
               InkWell(
                 onTap: () {
                   setState(() {
                     widget.story.like = !widget.story.like;
                   });
-                  if(widget.onStoryLike!=null) {
+                  if (widget.onStoryLike != null) {
                     widget.onStoryLike!();
                   }
                 },
@@ -89,23 +90,23 @@ class _StoryPageScaffoldState extends State<StoryPageScaffold> {
                           ? Theme.of(context).primaryColor
                           : Colors.white,
                       BlendMode.srcIn),
-                  child: Icon(Icons.favorite_border_rounded),
+                  child: widget.likeIcon,
                 ),
               ),
-
-              SizedBox(
-                width: 30,
-              ),
-              InkWell(
-                onTap: () {
-                  if(widget.onWatchPressed!=null) {
-                    widget.onWatchPressed!();
-                  }
-                },
-                child: Icon(Icons.remove_red_eye_outlined),
-              ),
-    ],
-
+              if (widget.secondIcon != null) ...[
+                SizedBox(
+                  width: 30,
+                ),
+                InkWell(
+                  onTap: () {
+                    if (widget.onSecondPressed != null) {
+                      widget.onSecondPressed!();
+                    }
+                  },
+                  child: widget.secondIcon,
+                ),
+              ]
+            ],
           ),
         ),
       ),
