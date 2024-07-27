@@ -98,7 +98,7 @@ class _StoryPageScaffoldState extends State<StoryPageScaffold> {
               ),
               if (widget.secondIcon != null) ...[
                 SizedBox(
-                  width: 30,
+                  width: 16,
                 ),
                 InkWell(
                   onTap: () {
